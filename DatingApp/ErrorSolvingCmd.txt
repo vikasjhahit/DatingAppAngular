@@ -1,0 +1,6 @@
+npm cache verify 
+npm cache clean --force
+npm install –g @angular/cli@latest  
+
+
+	
