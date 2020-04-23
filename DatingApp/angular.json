@@ -36,14 +36,6 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -120,7 +112,7 @@
         }
       }
     }
-  },
+  }, 
   "defaultProject": "DatingApp",
   "cli": {
     "analytics": "8482a9f0-067e-4c39-9ab4-7b2387347cb9"
