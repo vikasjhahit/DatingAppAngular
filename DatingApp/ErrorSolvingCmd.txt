@@ -1,5 +1,5 @@
 npm cache verify 
-npm cache clean --force
+	
 npm install –g @angular/cli@latest  
 
 ==================================
@@ -17,3 +17,4 @@ angular2 switcher
 ===================================
 
 npm install ngx-bootstrap@2.0.5 --save
+MemberMessagesComponent

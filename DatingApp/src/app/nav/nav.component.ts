@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-nav',
@@ -11,36 +13,64 @@ import { Router } from '@angular/router';
 export class NavComponent implements OnInit {
   model: any = {};
   photoUrl: string;
+  userName: any;
+  isUserloggedIn: boolean = false;
+  private ngUnsubscribe = new Subject();
 
-  constructor() { }
+  constructor(private authService: AuthService, private alertify: AlertifyService, private router: Router) { }
 
   ngOnInit() {
-    const x = 5;
-   // this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
+    this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
+    this.userName = (localStorage.getItem('user') !== null ) ? JSON.parse(localStorage.getItem('user')).username : '';
+  
+    if(this.userName !== ''){
+      this.isUserloggedIn = true;
+    }
+    else{
+      this.authService.checkLogin$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
+        this.isUserloggedIn = data;
+      });
+    }
   }
 
-  login() {
-    // this.authService.login(this.model).subscribe(next => {
-    //   this.alertify.success('Logged in successfully');
-    // }, error => {
-    //   this.alertify.error(error);
-    // }, () => {
-    //   this.router.navigate(['/members']);
-    // });
-  }
+  // login() {
+  //   this.authService.login(this.model).subscribe(next => {
+  //     this.userName = JSON.parse(localStorage.getItem('user')) !== null ? JSON.parse(localStorage.getItem('user')).username : '';
+  //     this.alertify.success('Logged in successfully');
+  //   }, error => {
+  //     this.alertify.error(error);
+  //   }, () => {
+  //     alert('success');
+  //     this.router.navigate(['/members']);
+  //   });
+  // }
 
-  loggedIn() {
-    const token = localStorage.getItem('token');
-    return !!token;
-  }
+  // loggedIn() {
+  //   const token = localStorage.getItem('token');
+  //   return !!token;
+  // }
 
   logout() {
-    // localStorage.removeItem('token');
-    // localStorage.removeItem('user');
-    // this.authService.decodedToken = null;
-    // this.authService.currentUser = null;
-    // this.alertify.message('logged out');
-    // this.router.navigate(['/home']);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.authService.decodedToken = null;
+    this.authService.currentUser = null;
+    this.isUserloggedIn = false;
+  //  this.alertify.message('logged out');
+    this.router.navigate(['/home']);
   }
 
+  userLoggedInMode(isUserloggedIn: boolean) {
+    this.isUserloggedIn = isUserloggedIn;
+  }
+
+  RedirectEdit(){
+    this.router.navigate['/member/edit'];
+  }
+
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 }
