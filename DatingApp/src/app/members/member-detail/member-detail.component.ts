@@ -1,13 +1,51 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input, ViewChild} from '@angular/core';
+import { User } from '../../_models/user';
+import { UserService } from 'src/app/_services/user.service';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-member-detail',
   templateUrl: './member-detail.component.html',
-  styleUrls: ['./member-detail.component.css']
+  styleUrls: ['./member-detail.component.css'],
 })
 export class MemberDetailComponent implements OnInit {
-  constructor() { }
+  @Input() user: User;
+   allImages: any = [];
+
+  constructor(
+    private userService: UserService,
+    private route: ActivatedRoute //  public gallery: Gallery
+  ) {}
 
   ngOnInit() {
+    this.route.data.subscribe((data) => {
+      this.user = data['user'];
+    });
+    this.allImages = this.getImages();
+  }
+
+  getImages() {
+    const imageUrls = [];
+    for (const photo of this.user.photos) {
+      imageUrls.push({
+        small: photo.url,
+        medium: photo.url,
+        big: photo.url,
+        description: photo?.description,
+      });
     }
+    return imageUrls;
+  }
+
+  loadUser() {
+    this.userService.getUser(+this.route.snapshot.params['id']).subscribe(
+      (user: User) => {
+        this.user = user;
+      },
+      (error) => {
+        console.log('error in member detail');
+      }
+    );
+  }
 }

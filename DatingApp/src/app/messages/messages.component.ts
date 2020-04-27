@@ -21,8 +21,8 @@ export class MessagesComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      this.messages = data['messages'].result;
-      this.pagination = data['messages'].pagination;
+      // this.messages = data['messages'].result;
+      // this.pagination = data['messages'].pagination;
     });
   }
 

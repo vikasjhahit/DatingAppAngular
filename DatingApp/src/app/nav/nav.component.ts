@@ -22,15 +22,13 @@ export class NavComponent implements OnInit {
   ngOnInit() {
     this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
     this.userName = (localStorage.getItem('user') !== null ) ? JSON.parse(localStorage.getItem('user')).username : '';
-  
-    if(this.userName !== ''){
-      this.isUserloggedIn = true;
-    }
-    else{
-      this.authService.checkLogin$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
+
+    this.authService.checkLogin$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
         this.isUserloggedIn = data;
+        if ( this.userName !== ''){
+          this.isUserloggedIn = true;
+        }
       });
-    }
   }
 
   // login() {
@@ -65,7 +63,13 @@ export class NavComponent implements OnInit {
   }
 
   RedirectEdit(){
-    this.router.navigate['/member/edit'];
+      // if (this.router.url === '/members') {
+      //       this.router.navigate['/edit'];
+      // }
+      // else{
+      //   this.router.navigate['/member/edit'];
+      // }
+      this.router.navigate['/member/edit'];
   }
 
   ngOnDestroy() {

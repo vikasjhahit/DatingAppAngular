@@ -16,12 +16,16 @@
     </div>
   </div>
   
-  <div *ngIf="loginMode" class="container">
+  <div *ngIf="registerSuccessMsg === '' || loginMode" class="container">
     <div class="row justify-content-center">
       <div class="col-4">
         <app-login (cancelLogin)="cancelLoginMode($event)"></app-login>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="registerSuccessMsg" (registerSuccess)="registerSuccessMode($event)">
+      {{registerSuccessMsg}}
   </div>
   
 </div>

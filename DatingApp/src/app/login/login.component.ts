@@ -44,18 +44,10 @@ export class LoginComponent implements OnInit {
       if (res) {
         this.user = res;
         if (this.user && this.user.token !== '') {
-          localStorage.setItem('token', this.user.token);
-          localStorage.setItem('user', JSON.stringify(this.user.user));
-          this.decodedToken = this.jwtHelper.decodeToken(this.user.token);
-          this.currentUser = this.user.user;
-          this.changeMemberPhoto(this.currentUser.photoUrl);
-
           this.userName =
             JSON.parse(localStorage.getItem('user')) !== null
               ? JSON.parse(localStorage.getItem('user')).username
               : '';
-          //  this.loggedIn();
-        //  this.userloggedIn.emit(true);
           this.authService.checkLogin.next(true);
           this.router.navigate(['/members']);
         } else {

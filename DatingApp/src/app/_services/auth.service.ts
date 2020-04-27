@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 import { User } from '../_models/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   baseUrl = environment.apiUrl + 'auth/';
@@ -16,8 +16,8 @@ export class AuthService {
   currentUser: User;
   photoUrl = new BehaviorSubject<string>('../../assets/user.png');
   currentPhotoUrl = this.photoUrl.asObservable();
+  user: any;
 
-  
   public checkLogin = new BehaviorSubject<boolean>(false);
   checkLogin$ = this.checkLogin.asObservable();
 
@@ -28,12 +28,17 @@ export class AuthService {
   }
 
   login(model: any) {
-    return this.http.post(this.baseUrl + 'login', model).pipe(map((response) => {
+    return this.http.post(this.baseUrl + 'login', model).pipe(
+      map((response) => {
+        localStorage.setItem('token', this.user.token);
+        localStorage.setItem('user', JSON.stringify(this.user.user));
+        this.decodedToken = this.jwtHelper.decodeToken(this.user.token);
+        this.currentUser = this.user.user;
+        this.changeMemberPhoto(this.currentUser.photoUrl);
         return response;
       })
     );
   }
-
 
   register(user: User) {
     return this.http.post(this.baseUrl + 'register', user);
@@ -42,5 +47,11 @@ export class AuthService {
   loggedIn() {
     const token = localStorage.getItem('token');
     return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  getDecodeToken(): any{
+   return (this.decodedToken = this.jwtHelper.decodeToken(
+     localStorage.getItem('token')
+   ));
   }
 }

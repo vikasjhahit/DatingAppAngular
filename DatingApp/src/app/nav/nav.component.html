@@ -14,12 +14,13 @@
     </li>
   </ul>
 
-  <div *ngIf="isUserloggedIn"  class="dropdown" dropdown>
-    <a><b> Welcome {{userName | titlecase}}</b></a>&nbsp;
+  <div *ngIf="isUserloggedIn" style="color: white">
+    <b> Welcome {{userName | titlecase}}</b>&nbsp;
     <span class="mr-1">
       <img src="{{photoUrl || '../../assets/user.png'}}" alt="">
       </span>
-    <a (click)="RedirectEdit()"> Edit Profile</a>
+    <a [routerLink]="['/member/edit']" style="color: white;"> Edit Profile</a>
+    <!-- <a (click)="RedirectEdit()" > Edit Profile</a> -->
     <a (click)="logout()" *ngIf="isUserloggedIn"> Logout</a>
 
       <!-- <div class="dropdown-menu mt-3" *dropdownMenu>

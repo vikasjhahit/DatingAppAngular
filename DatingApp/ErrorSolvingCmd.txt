@@ -18,3 +18,20 @@ angular2 switcher
 
 npm install ngx-bootstrap@2.0.5 --save
 MemberMessagesComponent
+
+https://localhost:44385/api/users
+{
+"PageNumber": 1
+"pageSize": 5
+}
+
+Authorization
+Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyIiwidW5pcXVlX25hbWUiOiJ2aWthcyIsIm5iZiI6MTU4NzgzNjI1MSwiZXhwIjoxNTg3OTIyNjUxLCJpYXQiOjE1ODc4MzYyNTF9.NlM8SDGLa1DClIsiUXf-gbRYBB6f7xhwAWV8Kmc7xBgxH1Qa_UEfGQVpJRJaWUYYtmdeWwhJMeuffxlStVAOXg
+
+https://localhost:44385/api/auth/login
+{
+  "username": "vikas",
+  "password": "1234"
+}
+
+https://www.shutterstock.com/image-photo/asian-woman-wearing-white-sitting-coffee-1677063676

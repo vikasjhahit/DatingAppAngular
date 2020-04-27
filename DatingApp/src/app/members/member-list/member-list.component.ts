@@ -24,7 +24,8 @@ export class MemberListComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.users = data['users'].result;
       this.pagination = data['users'].pagination;
-    }); 
+    });
+
 
     this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
     this.userParams.minAge = 18;
@@ -50,7 +51,7 @@ export class MemberListComponent implements OnInit {
         this.users = res.result;
         this.pagination = res.pagination;
     }, error => {
-      this.alertify.error(error);
+   //   this.alertify.error(error);
     });
   }
 

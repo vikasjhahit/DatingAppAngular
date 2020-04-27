@@ -34,3 +34,8 @@
 .animate {
     transition: all 0.3s ease-in-out;
 }
+
+.img-height-css{
+    height: 200px;
+    width: 200px;
+}
