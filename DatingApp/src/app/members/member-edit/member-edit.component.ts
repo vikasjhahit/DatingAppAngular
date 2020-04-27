@@ -17,6 +17,8 @@ export class MemberEditComponent implements OnInit {
   user: User;
   photoUrl: string;
   editUser: EditUser = {} as any;
+  res: any;
+  updateReturnMsg = '';
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     if (this.editForm.dirty) {
@@ -51,8 +53,9 @@ export class MemberEditComponent implements OnInit {
       .updateUser(this.authService.decodedToken.nameid, this.editUser)
       .subscribe(
         (next) => {
-          // this.alertify.success('Profile updated successfully');
-          this.editForm.reset(this.user);
+          this.res = next;
+            this.updateReturnMsg = this.res.message;
+            this.editForm.reset(this.user);
         },
         (error) => {
           // this.alertify.error(error);

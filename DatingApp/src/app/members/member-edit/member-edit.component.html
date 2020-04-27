@@ -9,6 +9,10 @@
                     <strong>Information:</strong>
                     You have made changes. Any unsaved changes will be lost !
             </div>
+            <div *ngIf="updateReturnMsg !== ''" class="alert alert-danger">
+                <strong>Information:</strong>
+                {{updateReturnMsg}}
+            </div>
         </div>
     </div>
     <div class="row">
