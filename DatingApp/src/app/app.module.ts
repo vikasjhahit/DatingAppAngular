@@ -37,6 +37,7 @@ import { MessagesResolver } from './_resolvers/messages.resolver';
 import { MemberMessagesComponent } from './members/member-messages/member-message.component';
 import { LoginComponent } from './login/login.component';
 import { NgxImageGalleryModule } from 'ngx-image-gallery';
+// import { NgDatepickerModule } from 'ng2-datepicker';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -74,10 +75,11 @@ export function tokenGetter() {
     //   PaginationModule.forRoot(),
     TabsModule.forRoot(),
     RouterModule.forRoot(appRoutes),
-  //  NgxGalleryModule,
-   // GalleryModule,
-  //  NgxImageGalleryModule,
+    //  NgxGalleryModule,
+    // GalleryModule,
+    //  NgxImageGalleryModule,
     FileUploadModule,
+   // NgDatepickerModule,
     JwtModule.forRoot({
       config: {
         // tslint:disable-next-line:object-literal-shorthand

@@ -1,4 +1,3 @@
-<h5>Edit Component</h5>
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
@@ -9,7 +8,7 @@
                     <strong>Information:</strong>
                     You have made changes. Any unsaved changes will be lost !
             </div>
-            <div *ngIf="updateReturnMsg !== ''" class="alert alert-danger">
+            <div *ngIf="updateReturnMsg !== ''" [ngClass]="{'alert alert-danger': updatestatus === '', 'alert alert-success': updatestatus !== '' }">
                 <strong>Information:</strong>
                 {{updateReturnMsg}}
             </div>
@@ -29,11 +28,11 @@
                 </div>
                 <div>
                     <strong>Last active:</strong>
-                    <p>{{user?.lastActive}}</p>
+                    <p>{{user?.lastActive | date:'medium'}}</p>
                 </div>
                 <div>
                     <strong>Member Since:</strong>
-                    <p>{{user?.created}}</p>
+                    <p>{{user?.created | date}}</p>
                 </div>
             </div>
             <div class="card-footer">
@@ -53,10 +52,32 @@
                             <textarea name="interests" rows="5" class="form-control" [(ngModel)]="user.interests"></textarea>
                             <h4>Location Details</h4>
                             <div class="form-inline">
-                                <label for="city">City</label>
-                                <input type="text" class="form-control" name="city" [(ngModel)]="user.city"> 
-                                <label for="city">Country</label>
-                                <input type="text" class="form-control" name="country" [(ngModel)]="user.country">
+                                <!-- <label for="country">Country</label>
+                                <input type="text" class="form-control" name="country" [(ngModel)]="user.country"> -->
+
+                                <!-- <label for="city">City</label>
+                                 <input type="text" class="form-control" name="city" [(ngModel)]="user.city"> -->
+
+                            <label for="country">Country</label>&nbsp;
+                            <div title="Please select the country">
+                                <select class="form-control" placeholder="Country" name="country" [(ngModel)]="user.country" (change)="changeCountry($event.target.value)">
+                                    <option *ngIf="!user.country">Select Country </option>
+                                    <option *ngIf="user.country">{{user.country}}</option>
+                                    <option *ngFor="let country of countryList">{{country.country}} </option>
+                                </select>
+                            </div>&nbsp;&nbsp;
+                            
+                            <!-- <label for="state">City</label>&nbsp;
+                            <div title="Please select the city">
+                                <select class="form-control" placeholder="City" name="city" [(ngModel)]="user.city">
+                                    <option>Select City </option>
+                                    <option *ngIf="user.country">{{user.city}}</option>
+                                    <option *ngFor="let city of cities">{{city}} </option>
+                                </select>
+                            </div> -->
+
+                            <label for="city">City</label>
+                                <input type="text" class="form-control" name="city" [(ngModel)]="user.city">
                             </div>
                         </form>
                     </tab>

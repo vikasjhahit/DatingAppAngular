@@ -6,6 +6,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 import { User } from '../_models/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CommonConstant } from '../constant/CommonConstant';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
   currentPhotoUrl = this.photoUrl.asObservable();
   jwtHelper = new JwtHelperService();
   invalidNamePasswordMsg = '';
-  user: any;
+  response: any;
 
   constructor(
     private authService: AuthService,
@@ -42,19 +43,19 @@ export class LoginComponent implements OnInit {
   login() {
     this.authService.login(this.model).subscribe((res) => {
       if (res) {
-        this.user = res;
-        if (this.user && this.user.token !== '') {
+        this.response = res;
+        if (this.response.status !== 'Failure' && this.response.token !== '') {
           this.userName =
             JSON.parse(localStorage.getItem('user')) !== null
               ? JSON.parse(localStorage.getItem('user')).username
               : '';
           this.authService.checkLogin.next(true);
-          this.router.navigate(['/members']);
+          this.router.navigate(['/lists']);
         } else {
-          this.invalidNamePasswordMsg = this.user.message; // CommonConstant.InvalidNamePassMsg;
+          this.invalidNamePasswordMsg = this.response.message; // CommonConstant.InvalidNamePassMsg;
         }
       } else {
-        this.invalidNamePasswordMsg = this.user.message; // CommonConstant.InvalidNamePassMsg;
+        this.invalidNamePasswordMsg = this.response.message; // CommonConstant.InvalidNamePassMsg;
       }
     });
   }
@@ -66,6 +67,8 @@ export class LoginComponent implements OnInit {
   cancel() {
     this.cancelLogin.emit(false);
   }
+
+  forgotPassword() {}
 
   changeMemberPhoto(photoUrl: string) {
     this.photoUrl.next(photoUrl);

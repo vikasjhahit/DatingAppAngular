@@ -101,7 +101,17 @@ export class UserService {
   }
 
   updateUser(id: number, user: EditUser) {
-    return this.http.put(this.baseUrl + 'users/' + id, user);
+    // let params = new HttpParams();
+    // params = params.append('City', user.City);
+    // params = params.append('Country', user.Country);
+    // params = params.append('Interests', user.Interests);
+    // params = params.append('Introduction', user.Introduction);
+    // params = params.append('LookingFor', user.LookingFor);
+
+   // return this.http.put(this.baseUrl + 'users/' + id, params);
+
+       return this.http.put(this.baseUrl + 'users/' + id, user);
+
   }
 
   setMainPhoto(userId: number, id: number) {

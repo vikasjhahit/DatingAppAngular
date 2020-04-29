@@ -1,11 +1,10 @@
-<h5>Member detail</h5>
 <div class="container">
     <div class="row">
         <h1>{{user?.knownAs}} Profile</h1>
     </div>
     <div class="row">
         <div class="col-sm-4">
-            <img class="card-img-top img-thumbnail" src="{{user?.photoUrl}}" alt="{{user?.knownAs}}">
+            <img class="card-img-top img-thumbnail" [src]="user.photoUrl !== null ? user.photoUrl : defaultPhotoUrl" alt="{{user?.knownAs}}">
             <div class="card-body">
                 <div>
                     <strong>Location:</strong>

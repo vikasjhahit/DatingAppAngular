@@ -17,6 +17,7 @@ export class AuthService {
   photoUrl = new BehaviorSubject<string>('../../assets/user.png');
   currentPhotoUrl = this.photoUrl.asObservable();
   user: any;
+  res: any;
 
   public checkLogin = new BehaviorSubject<boolean>(false);
   checkLogin$ = this.checkLogin.asObservable();
@@ -30,12 +31,16 @@ export class AuthService {
   login(model: any) {
     return this.http.post(this.baseUrl + 'login', model).pipe(
       map((response) => {
-        localStorage.setItem('token', this.user.token);
-        localStorage.setItem('user', JSON.stringify(this.user.user));
-        this.decodedToken = this.jwtHelper.decodeToken(this.user.token);
-        this.currentUser = this.user.user;
-        this.changeMemberPhoto(this.currentUser.photoUrl);
-        return response;
+        this.res = response;
+        if (this.res.status !== 'Failure' && this.res.token !== '') {
+          this.user = this.res.user;
+          localStorage.setItem('token', this.res.token);
+          localStorage.setItem('user', JSON.stringify(this.res.user));
+          this.decodedToken = this.jwtHelper.decodeToken(this.res.token);
+          this.currentUser = this.res.user;
+          this.changeMemberPhoto(this.currentUser.photoUrl);
+        }
+        return this.res;
       })
     );
   }
@@ -49,9 +54,13 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
-  getDecodeToken(): any{
-   return (this.decodedToken = this.jwtHelper.decodeToken(
-     localStorage.getItem('token')
-   ));
+  getDecodeToken(): any {
+    return (this.decodedToken = this.jwtHelper.decodeToken(
+      localStorage.getItem('token')
+    ));
+  }
+
+  getCountryList(): any {
+    return this.http.get<any>(this.baseUrl + 'getcountrylist');
   }
 }

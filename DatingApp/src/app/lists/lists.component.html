@@ -1,4 +1,3 @@
-<h1>List Component</h1>
 <div class="text-center mt-3">
     <!-- <h2>{{likesParam === 'Likers' ? 'Members who like me' : 'Members who I\'ve Liked'}} : {{pagination.totalItems}}</h2> -->
   
@@ -7,8 +6,9 @@
 <div class="container mt-3">
 
   <div class="row">
-    <div class="btn-group">
+    <div class="btn-group1">
       <button class="btn btn-primary" name="likesParam" ngDefaultControl [(ngModel)]="likesParam" btnRadio="Likers" (click)="loadUsers()">Members who like me</button>
+      <div class="clearfix clearfix-css" ></div><br/>
       <button class="btn btn-primary" name="likesParam" ngDefaultControl [(ngModel)]="likesParam" btnRadio="Likees" (click)="loadUsers()">Members who I like</button>
     </div>
   </div>
@@ -16,7 +16,7 @@
   <br>
 
   <div class="row">
-    <div *ngFor="let user of users" class="col-sm-6 col-md-4 col-lg-4 col-xl-2">
+    <div *ngFor="let user of users" class="card-member-css">
       <app-member-card [user]="user"></app-member-card>
     </div>
   </div>

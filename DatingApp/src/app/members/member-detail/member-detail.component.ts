@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild} from '@angular/core';
 import { User } from '../../_models/user';
 import { UserService } from 'src/app/_services/user.service';
 import { ActivatedRoute } from '@angular/router';
+import { CommonConstant } from 'src/app/constant/CommonConstant';
 
 
 @Component({
@@ -11,7 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MemberDetailComponent implements OnInit {
   @Input() user: User;
-   allImages: any = [];
+  allImages: any = [];
+  defaultPhotoUrl: string;
 
   constructor(
     private userService: UserService,
@@ -20,8 +22,10 @@ export class MemberDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe((data) => {
-      this.user = data['user'];
+      this.user = data['user'].user;
     });
+
+    this.setDefaultPhoto();
     this.allImages = this.getImages();
   }
 
@@ -47,5 +51,9 @@ export class MemberDetailComponent implements OnInit {
         console.log('error in member detail');
       }
     );
+  }
+
+  setDefaultPhoto() {
+    this.defaultPhotoUrl = CommonConstant.DefaultPhotoPath;
   }
 }

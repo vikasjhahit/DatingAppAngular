@@ -19,6 +19,10 @@ export class MemberEditComponent implements OnInit {
   editUser: EditUser = {} as any;
   res: any;
   updateReturnMsg = '';
+  updatestatus: '';
+  countryList: Array<any>;
+  cities: Array<any>;
+
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     if (this.editForm.dirty) {
@@ -35,11 +39,44 @@ export class MemberEditComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe((data) => {
-      this.user = data['user'];
+      this.user = data['user'].user;
     });
     this.authService.currentPhotoUrl.subscribe(
       (photoUrl) => (this.photoUrl = photoUrl)
     );
+
+    this.GetCountryList();
+  }
+
+  GetCountryList() {
+    // this.countryList = [
+    //   { name: 'India', cities: ['Mumbai'] },
+    //   {
+    //     name: 'Germany',
+    //     cities: ['Duesseldorf', 'Leinfelden-Echterdingen', 'Eschborn'],
+    //   },
+    //   { name: 'Spain', cities: ['Barcelona'] },
+    //   { name: 'USA', cities: ['Downers Grove'] },
+    //   { name: 'Mexico', cities: ['Puebla'] },
+    //   { name: 'China', cities: ['Beijing'] },
+    // ];
+
+    this.authService
+      .getCountryList()
+      .subscribe(
+        (next) => {
+         this.countryList = next;
+        },
+        (error) => {
+          // this.alertify.error(error);
+        }
+      );
+  }
+
+  changeCountry(selectedCountryName) {
+    this.cities = this.countryList.find(
+      (con) => con.name === selectedCountryName
+    ).cities;
   }
 
   updateUser() {
@@ -54,8 +91,9 @@ export class MemberEditComponent implements OnInit {
       .subscribe(
         (next) => {
           this.res = next;
-            this.updateReturnMsg = this.res.message;
-            this.editForm.reset(this.user);
+          this.updatestatus = this.res.Success;
+          this.updateReturnMsg = this.res.message;
+          this.editForm.reset(this.user);
         },
         (error) => {
           // this.alertify.error(error);

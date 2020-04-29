@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 // import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { User } from '../_models/user';
 import { Router } from '@angular/router';
+import { UserService } from '../_services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -15,15 +16,20 @@ export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
   @Output() registerSuccess = new EventEmitter();
   user: User;
+  isFormReset: boolean = false;
 
   registerForm: FormGroup;
+  countryList: Array<any>;
+  response: any;
+  registrationMessage = '';
   // bsConfig: Partial<BsDatepickerConfig>;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private alertify: AlertifyService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -31,6 +37,7 @@ export class RegisterComponent implements OnInit {
     //   containerClass: 'theme-red'
     // };
     this.createRegisterForm();
+    this.GetCountryList();
   }
 
   createRegisterForm() {
@@ -66,9 +73,13 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.valid) {
       this.user = Object.assign({}, this.registerForm.value);
       this.authService.register(this.user).subscribe(
-        () => {
-          this.registerSuccess.emit(true);
-          this.cancel();
+        (res) => {
+          this.response = res;
+          if (this.response.status === 'Success') {
+            this.cancel(this.response.message);
+          } else {
+            this.registrationMessage = this.response.message;
+          }
         },
         (error) => {
           this.router.navigate(['/home']);
@@ -78,7 +89,35 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  cancel() {
-    this.cancelRegister.emit(false);
+  GetCountryList() {
+    // this.countryList = [
+    //   { name: 'India', cities: ['Mumbai'] },
+    //   {
+    //     name: 'Germany',
+    //     cities: ['Duesseldorf', 'Leinfelden-Echterdingen', 'Eschborn'],
+    //   },
+    //   { name: 'Spain', cities: ['Barcelona'] },
+    //   { name: 'USA', cities: ['Downers Grove'] },
+    //   { name: 'Mexico', cities: ['Puebla'] },
+    //   { name: 'China', cities: ['Beijing'] },
+    // ];
+
+    this.authService.getCountryList().subscribe(
+      (next) => {
+        this.countryList = next;
+      },
+      (error) => {
+        // this.alertify.error(error);
+      }
+    );
+  }
+
+  cancel(msg: any) {
+    this.cancelRegister.emit(msg);
+  }
+
+  resetForm() {
+    this.registerForm.reset();
+    this.isFormReset = true;
   }
 }
