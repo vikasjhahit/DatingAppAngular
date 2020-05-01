@@ -21,10 +21,9 @@
   <div *ngIf="isUserloggedIn" style="color: white">
     <b> Welcome {{userName | titlecase}}</b>&nbsp;
     <span class="mr-1">
-      <img class="user-img-css" src="{{photoUrl || '../../assets/user.png'}}" alt="">
+      <img class="user-img-css" src="{{photoUrl || defaultPhoto}}" alt="">
       </span>
     <a [routerLink]="['/member/edit']" style="color: white;"> Edit Profile</a>
-    <!-- <a (click)="RedirectEdit()" > Edit Profile</a> -->
     <a (click)="logout()" *ngIf="isUserloggedIn"> Logout</a>
 
       <!-- <div class="dropdown-menu mt-3" *dropdownMenu>

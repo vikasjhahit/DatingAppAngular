@@ -21,7 +21,7 @@ import { AlertifyService } from './_services/alertify.service';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
-import { appRoutes } from './routes';
+import { appRoutes, AppRoutingModule } from './routes';
 import { AuthGuard } from './_guards/auth.guard';
 import { UserService } from './_services/user.service';
 import { MemberCardComponent } from './members/member-card/member-card.component';
@@ -31,13 +31,18 @@ import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
-// import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { ListsResolver } from './_resolvers/lists.resolver';
 import { MessagesResolver } from './_resolvers/messages.resolver';
 import { MemberMessagesComponent } from './members/member-messages/member-message.component';
 import { LoginComponent } from './login/login.component';
 import { NgxImageGalleryModule } from 'ngx-image-gallery';
 // import { NgDatepickerModule } from 'ng2-datepicker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeModule } from './home/home.module';
+import { CustomAlertModalComponent } from './shared/CustomModals/custom-alert-modal/custom.alert.component';
+ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -59,27 +64,23 @@ export function tokenGetter() {
     MemberCardComponent,
     MemberDetailComponent,
     MemberEditComponent,
-    // PhotoEditorComponent,
+    PhotoEditorComponent,
     // TimeAgoPipe,
     MemberMessagesComponent,
     LoginComponent,
+    CustomAlertModalComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    // BsDropdownModule.forRoot(),
-    // BsDatepickerModule.forRoot(),
-    // ButtonsModule.forRoot(),
-    //   PaginationModule.forRoot(),
     TabsModule.forRoot(),
-    RouterModule.forRoot(appRoutes),
-    //  NgxGalleryModule,
-    // GalleryModule,
-    //  NgxImageGalleryModule,
     FileUploadModule,
-   // NgDatepickerModule,
+    AppRoutingModule,
+    HomeModule,
+    BrowserAnimationsModule,
+    NgbModule,
     JwtModule.forRoot({
       config: {
         // tslint:disable-next-line:object-literal-shorthand

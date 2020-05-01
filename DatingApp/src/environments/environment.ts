@@ -3,9 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  apiUrl: 'https://localhost:44385/api/'
-};
+         production: false,
+         apiUrl: 'https://localhost:44385/api/',
+         defaultPhoto: '../../assets/user.png',
+       };
 
 /*
  * For easier debugging in development mode, you can import the following file

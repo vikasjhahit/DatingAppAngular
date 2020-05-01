@@ -23,3 +23,18 @@ height: 50%;
     right: 200px;
     bottom: 250px;
 }
+
+.home-img-css{
+    width: 350px;
+    height: 350px;
+}
+
+.padding-css{
+    padding-left: 150px;
+}
+.padding-nextPrev-div{
+    padding-left: 240px;
+}
+.phototab-background-css{
+    background: aliceblue;
+}

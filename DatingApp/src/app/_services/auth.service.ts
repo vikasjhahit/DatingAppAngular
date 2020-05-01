@@ -38,6 +38,7 @@ export class AuthService {
           localStorage.setItem('user', JSON.stringify(this.res.user));
           this.decodedToken = this.jwtHelper.decodeToken(this.res.token);
           this.currentUser = this.res.user;
+          this.photoUrl.next(this.currentUser.photoUrl);
           this.changeMemberPhoto(this.currentUser.photoUrl);
         }
         return this.res;

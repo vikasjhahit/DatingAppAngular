@@ -38,19 +38,11 @@ export class UserService {
     let params = new HttpParams();
 
     if (page != null && itemsPerPage != null) {
-      // this.params.PageNumber = page;
-      // this.params.pageSize = itemsPerPage;
-
       params = params.append('pageNumber', page);
       params = params.append('pageSize', itemsPerPage);
     }
 
     if (userParams != null) {
-      // this.params.minAge = userParams.minAge;
-      // this.params.maxAge = userParams.maxAge;
-      // this.params.gender = userParams.gender;
-      // this.params.orderBy = userParams.orderBy;
-
       params = params.append('minAge', userParams.minAge);
       params = params.append('maxAge', userParams.maxAge);
       params = params.append('gender', userParams.gender);
@@ -58,13 +50,10 @@ export class UserService {
     }
 
     if (likesParam === 'Likers') {
-      // this.params.Likers = true;
-      // params = params.append('Likers', 'true');
       params = params.append('Likers', 'false');
     }
 
     if (likesParam === 'Likees') {
-      //  this.params.Likees = true;
       params = params.append('Likees', 'true');
     }
 
@@ -88,12 +77,6 @@ export class UserService {
           return paginatedResult;
         })
       );
-
-    // return this.http.post<any>(this.baseUrl + 'users', JSON.stringify(this.params), httpOptions)
-    //   .pipe(map(response => {
-    //       return response;
-    //     })
-    //   );
   }
 
   getUser(id): Observable<User> {
@@ -101,17 +84,7 @@ export class UserService {
   }
 
   updateUser(id: number, user: EditUser) {
-    // let params = new HttpParams();
-    // params = params.append('City', user.City);
-    // params = params.append('Country', user.Country);
-    // params = params.append('Interests', user.Interests);
-    // params = params.append('Introduction', user.Introduction);
-    // params = params.append('LookingFor', user.LookingFor);
-
-   // return this.http.put(this.baseUrl + 'users/' + id, params);
-
        return this.http.put(this.baseUrl + 'users/' + id, user);
-
   }
 
   setMainPhoto(userId: number, id: number) {

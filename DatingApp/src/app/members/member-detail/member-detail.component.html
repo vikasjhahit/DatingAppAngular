@@ -16,11 +16,11 @@
                 </div>
                 <div>
                     <strong>Last active:</strong>
-                    <p>{{user?.lastActive}}</p>
+                    <p>{{user?.lastActive | date:'medium'}}</p>
                 </div>
                 <div>
                     <strong>Member Since:</strong>
-                    <p>{{user?.created}}</p>
+                    <p>{{user?.created | date}}</p>
                 </div>  
             </div>
             <div class="card-footer">
@@ -43,28 +43,21 @@
                         <h4>Interests</h4>
                         <p>{{user?.interests}}</p>
                     </tab>
-                    <tab heading="Photos">
-                        <h4>Photos will go here</h4>
-                        <!-- <ngx-image-gallery id="dispaly-show-css" [images]="images" [conf]="conf" (onOpen)="openGallery($event)" (onClose)="closeGallery()"
-                            (onImageClicked)="galleryImageClicked($event)" (onImageChange)="newImage($event)"
-                            (onDelete)="deleteImage($event)"></ngx-image-gallery> -->
-                            
-                            <!-- test = {{images | json}} -->
-
-                            <!-- <div class="row">
-                                <mdb-image-modal [modalImages]="imagesBasic" type="no-margin"></mdb-image-modal>
-                            </div> -->
-
-                            <div class="row">
-                                <ul>
-                                    <li *ngFor="let img of allImages ">
-                                        <!-- <a [routerLink]="['/image', img.id]"> -->
-                                            <a >
-                                            <img src="{{img.small}}" class="img" width="240" height="170">
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                    <tab heading="{{countImages === 0 ? null : countImages}} Photos" class="phototab-background-css">
+                        <div class="padding-nextPrev-div">
+                            <h3 *ngIf="countImages !== 0">{{user?.username}}'s Photos</h3>
+                            <h3 *ngIf="countImages === 0">{{user?.username}} has no photo yet</h3>
+                        </div>
+                        <div class="padding-css" *ngFor="let item of allImages; let i = index">
+                            <img class="home-img-css" *ngIf="i == counter" [src]="allImages[i].medium"
+                                [ngStyle]="{'max-height': allImages ? '675px' : '500px'}" alt="MemberPhoto">
+                        </div>
+                        <br/>
+                        <div class="padding-nextPrev-div" *ngIf="this.countImages > 2">
+                            <button [disabled]="counter === 0" class="btn btn-primary" (click)="showPreviousImage()">PREVIOUS</button>
+                            &nbsp;&nbsp;
+                            <button [disabled]="(counter + 1) === countImages" class="btn btn-primary" (click)="showNextImage()">NEXT</button>
+                        </div>
 
                     </tab>
                     <tab heading="Message">

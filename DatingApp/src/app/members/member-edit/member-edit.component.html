@@ -8,16 +8,19 @@
                     <strong>Information:</strong>
                     You have made changes. Any unsaved changes will be lost !
             </div>
-            <div *ngIf="updateReturnMsg !== ''" [ngClass]="{'alert alert-danger': updatestatus === '', 'alert alert-success': updatestatus !== '' }">
+            <!-- <div *ngIf="updateReturnMsg !== ''" [ngClass]="{'alert alert-danger': updatestatus === '', 'alert alert-success': updatestatus !== '' }">
                 <strong>Information:</strong>
                 {{updateReturnMsg}}
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="row">
         <div class="col-sm-4">
-            <img class="card-img-top img-thumbnail" src="{{user?.photoUrl}}" alt="{{user?.knownAs}}">
+            <img class="card-img-top img-thumbnail" src="{{user?.photoUrl || defaultPhoto}}" alt="{{user?.knownAs}}">
             <div class="card-body">
+                <div>
+                   <button class="btn btn-danger" [disabled]="user?.photoUrl === defaultPhoto" (click)="removeProfilePhoto()">Remove Profile Photo</button>
+                </div><br/>
                 <div>
                     <strong>Location:</strong>
                     <p>{{user?.city}}, {{user?.country}}</p>
@@ -82,7 +85,7 @@
                         </form>
                     </tab>
                     <tab heading="Edit Photos">
-                        <p>Photo edit will go here</p>
+                        <photo-editor-list [photos]="user?.photos" (getMainPhotoChange)= updateMainPhoto($event)></photo-editor-list>
                     </tab>
                 </tabset>
             </div>
