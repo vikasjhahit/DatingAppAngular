@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
 // import { GalleryModule } from 'ng-gallery';
 // import { NgxGalleryModule } from 'ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
-import { TimeAgoPipe } from 'time-ago-pipe';
+// import { TimeAgoPipe } from 'time-ago-pipe';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -65,7 +65,7 @@ export function tokenGetter() {
     MemberDetailComponent,
     MemberEditComponent,
     PhotoEditorComponent,
-    // TimeAgoPipe,
+   // TimeAgoPipe,
     MemberMessagesComponent,
     LoginComponent,
     CustomAlertModalComponent,

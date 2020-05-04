@@ -17,14 +17,14 @@ export class MessagesResolver implements Resolve<Message[]> {
         private alertify: AlertifyService, private authService: AuthService) {}
 
     resolve(route: ActivatedRouteSnapshot): Observable<Message[]> {
-        // return this.userService.getMessages(this.authService.decodedToken.nameid,
-        //       this.pageNumber, this.pageSize, this.messageContainer).pipe(
-        //     catchError(error => {
-        //         this.alertify.error('Problem retrieving messages');
-        //         this.router.navigate(['/home']);
-        //         return of(null);
-        //     })
-        // );
+        return this.userService.getMessages(this.authService.getDecodeToken().nameid,
+              this.pageNumber, this.pageSize, this.messageContainer).pipe(
+            catchError(error => {
+              //  this.alertify.error('Problem retrieving messages');
+                this.router.navigate(['/home']);
+                return of(null);
+            })
+        );
         return of(null);
     }
 }

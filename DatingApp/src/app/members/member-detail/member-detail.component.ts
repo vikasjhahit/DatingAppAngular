@@ -4,6 +4,12 @@ import { UserService } from 'src/app/_services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'src/app/constant/CommonConstant';
 import { trigger, animate, state, transition, style } from '@angular/animations';
+import { Pagination } from 'src/app/_models/pagination';
+import { Message } from 'src/app/_models/message';
+import { TabsetComponent } from 'ngx-bootstrap/tabs/tabset.component';
+import { CustomAlertModalComponent } from 'src/app/shared/CustomModals/custom-alert-modal/custom.alert.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from 'src/app/_services/auth.service';
 
 
 @Component({
@@ -23,10 +29,17 @@ export class MemberDetailComponent implements OnInit {
   defaultPhotoUrl: string;
   counter = 0;
   countImages = 0;
+  messages: Message[];
+  pagination: Pagination;
+  @ViewChild('memberTabs') memberTabs: TabsetComponent;
+  res: any;
+  message = '';
 
   constructor(
+    private authService: AuthService,
     private userService: UserService,
-    private route: ActivatedRoute //  public gallery: Gallery
+    private route: ActivatedRoute,
+    private modal: NgbModal
   ) {}
 
   ngOnInit() {
@@ -34,8 +47,17 @@ export class MemberDetailComponent implements OnInit {
       this.user = data['user'].user;
     });
 
+    // this.route.queryParams.subscribe((params) => {
+    //   const selectedTabs = params['tab'];
+    //   this.selectTabs(+selectedTabs);
+    // });
+
     this.setDefaultPhoto();
     this.allImages = this.getImages();
+  }
+
+  selectTabs(tabId: number) {
+    this.memberTabs.tabs[tabId].active = true;
   }
 
   getImages() {
@@ -81,5 +103,45 @@ export class MemberDetailComponent implements OnInit {
 
   setDefaultPhoto() {
     this.defaultPhotoUrl = CommonConstant.DefaultPhotoPath;
+  }
+
+  sendLike(id: number) {
+    this.userService
+      .sendLike(this.authService.getDecodeToken().nameid, id)
+      .subscribe(
+        (data) => {
+          this.res = data;
+          if (this.res.status === 'Failure') {
+            this.message = 'Liked Failure';
+          }
+          if (this.res.message === 'You already liked this user.') {
+            this.message = 'You already liked ' + ' ' + this.user.knownAs;
+          } else {
+            this.message = 'You have liked ' + ' ' + this.user.knownAs;
+          }
+          const modalRef = this.modal.open(CustomAlertModalComponent, {
+            backdrop: 'static',
+          });
+
+          modalRef.componentInstance.data = this.message;
+          modalRef.componentInstance.type = 'Like';
+          modalRef.componentInstance.title = 'Like Status';
+          modalRef.componentInstance.buttonOK = 'OK';
+
+          modalRef.result.then((response) => {});
+        },
+        (error) => {
+          //   this.alertify.error(error);
+        }
+      );
+  }
+
+  ngAfterViewInit() {
+    this.route.queryParams.subscribe((params) => {
+      const selectedTabs = params['tab'];
+      if (selectedTabs !== undefined) {
+        this.selectTabs(+selectedTabs);
+      }
+    });
   }
 }

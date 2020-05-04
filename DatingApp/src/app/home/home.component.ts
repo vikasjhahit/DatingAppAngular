@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonConstant } from '../constant/CommonConstant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { trigger, transition, animate, style, state } from '@angular/animations';
+import { TitleService } from '../_services/title.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { trigger, transition, animate, style, state } from '@angular/animations'
       state('void', style({ opacity: 0 })),
       transition('void <=> *', [animate('0.5s ease-in-out')]),
     ]),
-  ]
+  ],
 })
 export class HomeComponent implements OnInit {
   registerMode = false;
@@ -25,20 +26,27 @@ export class HomeComponent implements OnInit {
   imagesForSlide: Array<any>;
   counter = 0;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private titleService: TitleService
+  ) {}
 
   ngOnInit() {
-               this.token =
-                 localStorage.getItem('token') === null
-                   ? ''
-                   : localStorage.getItem('token');
+    if (this.router.url === '/') {
+      this.titleService.setTitle('');
+    }
+   // this.titleService.setTitle('Welcome To Dating Application');
+    this.token =
+      localStorage.getItem('token') === null
+        ? ''
+        : localStorage.getItem('token');
 
-               this.setSlideImagesList();
-               setInterval( () => {
-               //  this.showNextImage(); 
-                }, 7000);
-             }
-
+    this.setSlideImagesList();
+    setInterval(() => {
+      //  this.showNextImage();
+    }, 7000);
+  }
 
   setSlideImagesList() {
     this.imagesForSlide = [
@@ -52,8 +60,7 @@ export class HomeComponent implements OnInit {
   showNextImage() {
     if (this.counter < this.imagesForSlide.length - 1) {
       this.counter += 1;
-    }
-    else{
+    } else {
       this.counter = 0;
     }
   }
@@ -61,8 +68,7 @@ export class HomeComponent implements OnInit {
   showPreviousImage() {
     if (this.counter >= 1) {
       this.counter = this.counter - 1;
-    }
-    else{
+    } else {
       this.counter = this.imagesForSlide.length - 1;
     }
   }
@@ -74,7 +80,7 @@ export class HomeComponent implements OnInit {
   }
 
   loginToggle() {
-  //  let url = 'home/login';
+    //  let url = 'home/login';
     this.loginMode = true;
     this.registerMode = false;
     this.loginRegisterClicked = true;

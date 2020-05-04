@@ -18,17 +18,9 @@ export const appRoutes: Routes = [
          {
            path: 'home',
            component: HomeComponent,
+           pathMatch: 'full',
+           data: { title: "Welcome To Dating Application's Home Page" },
            loadChildren: './home/home.module#HomeModule',
-           //   children: [
-           //     {
-           //       path: 'home/login',
-           //       component: LoginComponent ,
-           //     },
-           //     {
-           //       path: 'home/register',
-           //       component: RegisterComponent,
-           //     }
-           //   ]
          },
          //  {
          //    path: 'home/login',
@@ -46,32 +38,47 @@ export const appRoutes: Routes = [
              {
                path: 'members',
                component: MemberListComponent,
+               pathMatch: 'full',
+               data: { title: 'Matches List' },
                resolve: { users: MemberListResolver },
              },
              {
                path: 'members/:id',
                component: MemberDetailComponent,
+               pathMatch: 'full',
+               data: { title: 'Member Detail' },
                resolve: { user: MemberDetailResolver },
              },
              {
                path: 'member/edit',
                component: MemberEditComponent,
+               pathMatch: 'full',
+               data: { title: 'My Profile' },
                resolve: { user: MemberEditResolver },
                canDeactivate: [PreventUnsavedChanges],
              },
              {
                path: 'messages',
                component: MessagesComponent,
+               pathMatch: 'full',
+               data: { title: 'Chats' },
                resolve: { messages: MessagesResolver },
              },
              {
                path: 'lists',
                component: ListsComponent,
+               pathMatch: 'full',
+               data: { title: 'Member List' },
                resolve: { users: ListsResolver },
              },
            ],
          },
-         { path: '**', redirectTo: 'home', pathMatch: 'full' },
+         {
+           path: '**',
+           redirectTo: 'home',
+           pathMatch: 'full',
+           data: { title: "Welcome To Dating Application's Home Page" },
+         },
        ];
 
 @NgModule({

@@ -50,7 +50,7 @@ export class UserService {
     }
 
     if (likesParam === 'Likers') {
-      params = params.append('Likers', 'false');
+      params = params.append('Likers', 'true');
     }
 
     if (likesParam === 'Likees') {

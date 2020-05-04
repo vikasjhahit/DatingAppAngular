@@ -8,12 +8,12 @@
                 </button>
             </li>
             <li class="list-inline-item">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary active" (click)="sendLike(user.id)">
                     <i class="fa fa-heart"></i>
                 </button>
             </li>
             <li class="list-inline-item">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" [routerLink]="['/members/' + user.id]" [queryParams]="{tab: 3}">
                     <i class="fa fa-envelope"></i>
                 </button>
             </li>
@@ -25,6 +25,6 @@
         {{user.knownAs}}, {{user.age}}
     </h5>
     <p class="card-text text-muted text-center">{{user.city}}</p>
-    <a [routerLink]="['/members/', user.id]" class="btn btn-primary">View Profile</a>
+    <a [routerLink]="['/members/', user.id]" class="btn btn-primary view-detail-button">View Profile</a>
   </div>
 </div>

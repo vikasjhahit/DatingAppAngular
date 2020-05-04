@@ -113,6 +113,12 @@ constructor(private modal: NgbActiveModal) {}
 defaultPhoto = environment.defaultPhoto;
 '../../assets/user.png'
 
+this.route.data.subscribe((data) => {
+                 this.messages = data['messages'].result.message;
+                 this.pagination = data['messages'].pagination;
+               });
+
+[queryParams]="{tab: 3}"
 
 
 

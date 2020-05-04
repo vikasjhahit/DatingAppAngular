@@ -11,6 +11,8 @@ import { CustomAlertModalComponent } from 'src/app/shared/CustomModals/custom-al
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import { CommonConstant } from 'src/app/constant/CommonConstant';
+import { TitleService } from 'src/app/_services/title.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-member-edit',
@@ -42,10 +44,14 @@ export class MemberEditComponent implements OnInit {
     private alertify: AlertifyService,
     private userService: UserService,
     private authService: AuthService,
-    private modal: NgbModal
+    private modal: NgbModal,
+    private titleService: TitleService,
+    private title: Title
   ) {}
 
   ngOnInit() {
+  //  this.titleService.setTitle('My Profile');
+    this.title.getTitle();
     this.route.data.subscribe((data) => {
       this.user = data['user'].user;
     });
@@ -144,15 +150,15 @@ export class MemberEditComponent implements OnInit {
     modalRef.result.then((response) => {
       if (response === 'ok') {
         if (from === 'removeprofilephoto') {
-            this.updateMainPhoto(this.defaultPhoto);
-            this.userService
-              .setMainPhoto(this.authService.getDecodeToken().nameid, 0)
-              .subscribe((data) => {
-                // this.res = data;
-                this.user.photos.filter((photo) => {
-                  photo.isMain = false;
-                });
+          this.updateMainPhoto(this.defaultPhoto);
+          this.userService
+            .setMainPhoto(this.authService.getDecodeToken().nameid, 0)
+            .subscribe((data) => {
+              // this.res = data;
+              this.user.photos.filter((photo) => {
+                photo.isMain = false;
               });
+            });
         }
       }
     });
