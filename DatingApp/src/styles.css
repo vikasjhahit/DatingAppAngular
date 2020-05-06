@@ -2,8 +2,8 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
  /* @import '../node_modules/bootswatch/dist/united/bootstrap.min.css'; */
 @import '../node_modules/font-awesome/css/font-awesome.min.css';
- /*@import '../node_modules/alertifyjs/build/css/alertify.css';*/
-    /* @import '../node_modules/alertifyjs/build/css/themes/bootstrap.min.css'; */
+/* @import '../node_modules/alertifyjs/build/css/alertify.css';*/
+@import '../node_modules/alertifyjs/build/css/themes/bootstrap.min.css';
 /* @import '../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css';  */
 
 .tab-panel {
@@ -51,3 +51,8 @@
     border-top: 1px solid #eee;
     padding: 15px 0;
   }
+
+  a{
+    cursor: pointer !important;
+  }
+  

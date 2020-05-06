@@ -1,0 +1,95 @@
+<div class="row">
+    <div class="col-sm-2" *ngFor="let photo of photos">
+        <img [src]="photo.url" class="img-thumbnail p1" [alt]="photo">
+        <div class="text-center">
+            <button type="button" class="btn btn-sm mr-1" (click)="setIsMain(photo)" 
+            [disabled]="photo.isMain" [ngClass]="photo.isMain ? 'btn-success active' : 'btn-secondary'">Main</button>
+            <button type="button" class="btn btn-sm btn-danger" (click)="deletePhoto(photo)">
+                <i class="fa fa-trash-o fa-lg"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<br/><br>
+
+<div class="row mt-3">
+    <div class="col-md-4">
+        <h3>Upload Photos</h3>
+
+        <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+            [uploader]="uploader" class="card bg-fade p-3 text-center mb-3 my-drop-zone border-css">
+            <i class="fa fa-upload fa-3x"></i>
+            Drop photos here
+        </div>
+        <br/>
+
+        <!-- Multiple -->
+        <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
+
+        <!-- Single
+        <input type="file" ng2FileSelect [uploader]="uploader" /> -->
+    </div>
+
+    <div class="col-md-8" style="margin-bottom: 40px" *ngIf="uploader?.queue?.length">
+
+        <h3>Upload queue</h3>
+        <p>Queue length: {{ uploader?.queue?.length }}</p>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th width="50%">Name</th>
+                    <th>Size</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of uploader.queue">
+                    <td><strong>{{ item?.file?.name }}</strong></td>
+                    <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <div>
+                <label>Queue progress:</label> 
+                <div class="progress mb-4">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                </div>
+            </div>
+            <br/>
+            <button type="button" class="btn btn-success btn-s" (click)="uploadImage()"
+                [disabled]="!uploader.getNotUploadedItems().length">
+                <span class="fa fa-upload"></span> UPLOAD 
+            </button>&nbsp;
+            <button type="button" class="btn btn-warning btn-s" (click)="cancelAll()"
+                [disabled]="!uploader.isUploading">
+                <span class="fa fa-ban"></span> CANCLE 
+            </button>&nbsp;
+            <button type="button" class="btn btn-danger btn-s" (click)="clearQueue()"
+                [disabled]="!uploader.queue.length">
+                <span class="fa fa-trash"></span> REMOVE   
+            </button>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="row" *ngIf="responseMessage !== ''">
+        <div [ngClass]="{'alert alert-danger': responseMessage === 'Failure', 'alert alert-success': responseMessage !== 'Success'}">
+                <strong>Response:</strong>
+                {{responseMessage}}
+        </div>
+</div>
+<div class="row">
+        <div class="alert alert-info" *ngIf="uploading">
+            Plese wait while uploading the photo. Photo uploading is in progress...
+        </div>
+        <div class="alert alert-info" *ngIf="deleting">
+            Plese wait while deleting the photo. Deleting photo is in progress...
+        </div>
+        <div class="alert alert-danger" *ngIf="deleteRespnseMsg">
+           {{deleteRespnseMsg}}
+        </div>
+    </div>

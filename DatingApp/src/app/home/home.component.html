@@ -1,0 +1,88 @@
+<div class="container1">
+<!-- <img class="home-img-css" [ngStyle]="{'max-height': registerMode ? '675px' : '500px'}"
+     src="{{'../../assets/datinghomeimg1.jpg'}}" alt="DatingHome"> -->
+
+    <div *ngFor="let item of imagesForSlide; let i = index">
+      <img class="home-img-css" @fade *ngIf="i == counter" [src]="imagesForSlide[i].src"
+        [ngStyle]="{'max-height': registerMode ? '675px' : '500px'}" alt="DatingHome">
+    </div>
+
+    <!-- <button (click)="showPreviousImage()">previous</button> ||
+    <button (click)="showNextImage()">next</button> -->
+
+  <div class="content" [ngStyle]="styleObject()">
+  <div role="main">
+   <br />
+      <div *ngIf="!loginRegisterClicked" style="text-align: center">
+        <p class="home-txt-css" *ngIf="token === ''">
+          <strong>Looking for a relationship ? This plateform provides you to view your matches... All you need to do is
+            sign up!</strong>
+        </p>
+        <p class="home-txt-css" *ngIf="token !== ''">
+          <strong>Hey !!! do you want to find your perfect partner? All you need to do like and message...</strong>
+        </p>
+        <div class="text-center" *ngIf="token === ''">
+          <button class="btn btn-primary btn-lg mr-2" (click)="registerToggle() " [routerLink]="['/home/register']" routerLinkActive="active">REGISTER</button>
+          <button class="btn btn-primary btn-lg mr-2" (click)="loginToggle()" [routerLink]="['home/login']">LOG IN</button>
+        </div>
+      </div>
+    </div>
+    
+      <div *ngIf="registerMode" class="container">
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <app-register1 (cancelRegister)="cancelRegisterMode($event)"></app-register1>
+          </div>
+        </div>
+      </div>
+    
+      <div *ngIf="loginMode" class="container">
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <app-login1 (cancelLogin)="cancelLoginMode($event)"></app-login1>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="alert alert-success text-center custom-mgs-cls" *ngIf="registerSuccessMsg"
+        (registerSuccess)="registerSuccessMode($event)">
+        {{registerSuccessMsg}}
+      </div>
+    
+    <!-- </div> -->
+
+</div>
+</div>
+
+<!-- <div class="container mt-5">
+  <div *ngIf="!registerMode" style="text-align: center">
+    <p class="home-txt-css">
+      <strong>Looking for a relationship ? This plateform provides you to view your matches... All you need to do is sign up!</strong>
+    </p>
+    <div class="text-center" *ngIf="token === ''">
+      <button class="btn btn-primary btn-lg mr-2" (click)="registerToggle()">REGISTER</button>
+      <button class="btn btn-primary btn-lg mr-2" (click)="loginToggle()">LOG IN</button>
+    </div>
+  </div>
+
+  <div *ngIf="registerMode" class="container">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="loginMode" class="container">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <app-login (cancelLogin)="cancelLoginMode($event)"></app-login>
+      </div>
+    </div>
+  </div>
+<br/>
+  <div class="alert alert-success text-center custom-mgs-cls" *ngIf="registerSuccessMsg" (registerSuccess)="registerSuccessMode($event)">
+      {{registerSuccessMsg}}
+  </div>
+  
+</div> -->
