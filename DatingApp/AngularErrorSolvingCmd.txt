@@ -1,0 +1,128 @@
+Source: - https://www.youtube.com/watch?v=geEWd7mDlTI
+---------------------------------------------------------------------------------
+D:\visual stdio projects\VikasSourceCodeDev
+--------------------------------------------------
+npm install -g npm@latest
+npm cache verify
+npm i
+npm cache clean --force
+--------------------------------------------------
+https://materializecss.com/
+-------------------------------------------------
+Free hosting
+URL: http://member3.myasp.net/account/account_screen
+
+username:- vikasjha117
+pass;- vik***5
+email: v*****5@gmail.com
+
+-----------------------
+-
+npm cache verify 
+	
+npm install –g @angular/cli@latest  
+
+==================================
+extensions downloaded: 
+angular snippets
+angular files	
+angular language
+auto rename tag
+bracket pair colorizer
+debugger for chrome
+material icon theme
+prettier - code formatter
+tslint
+angular2 switcher
+===================================
+
+npm install ngx-bootstrap@2.0.5 --save
+MemberMessagesComponent
+
+DESKTOP-2SH9GPT
+
+DOMAIN\DESKTOP-2SH9GPT
+
+@Output() removeHeaderComponent: EventEmitter<boolean> = new EventEmitter(); ----put inside service inside class
+this.quizService.removeHeaderComponent.emit(true); ----------------------------------------put inside source component where you want to inject  
+    this.quizService.removeHeaderComponent.subscribe(isValid => {--------------------------put inside target component
+      this.userDetails = this.helperservice.getUserFromLocalStorage(); //what you want to change
+	  });
+
+document.getElementById("dispaly-show-css")style.display = 'show';
+
+login --bottom 0 top 0 
+nothing == bottom 0 top unset
+regisrer --bottom unset top --0 
+
+[ngStyle]="{'top': loginRegisterClicked ? '0' : 'unset'}" 
+  [ngStyle]="{'bottom': registerMode ? 'unset' : '0' }"
+
+[routerLink]="['home/login']" routerLinkActive="active"
+
+============================================custom model start===================================================
+1.
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+inside constructor : private modal: NgbModal
+
+ let modalRef = this.modal.open(RemovePhotoModalComponent, { backdrop: 'static' });
+      modalRef.componentInstance.allQuestionData = questions;
+      modalRef.componentInstance.type = 'Replace';
+      modalRef.componentInstance.title = 'Replacement Question';
+      modalRef.result.then((response) => {
+        if (response) {
+          this.UseThisQuestion(response);
+        }
+      });
+
+
+2.
+create shared/models folders and inside that create a comonent ex RemovePhotoModalComponent
+where data is:
+
+constructor(private modal: NgbActiveModal) {}
+  @Input() data;
+  @Input() type;
+  @Input() title;
+  @Input() buttonOK;
+  @Input() buttonCancle;
+
+  ngOnInit() {}
+
+  close(status: string) {
+    this.modal.close(status);
+  }
+
+-------html----
+<div class="modal-header">
+  <h5 class="modal-title">{{title}}</h5>
+  <button aria-label="Close" class="close" type="button" (click)="close('cancle')"><span aria-hidden="true">×</span></button>
+</div>
+
+<div class="modal-body">
+{{data}}
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" aria-label="click button to ok" 
+          (click)="close('ok')">{{buttonOK}}</button>
+     <button type="button" class="btn btn-secondary" aria-label="click button to Cancel"
+          (click)="close('cancle')">{{buttonCancle}}</button>
+  </div>
+============================================custom model end===================================================
+defaultPhoto = environment.defaultPhoto;
+'../../assets/user.png'
+
+this.route.data.subscribe((data) => {
+                 this.messages = data['messages'].result.message;
+                 this.pagination = data['messages'].pagination;
+               });
+
+[queryParams]="{tab: 3}"
+
+
+
+
+
+
+
